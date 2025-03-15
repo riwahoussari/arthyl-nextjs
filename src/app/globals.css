@@ -1,26 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-beige: #f5f0ed;
+  --color-dark-beige: #e4d6ce;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer utilities {
+  .side-padding {
+    @apply px-2.5 sm:px-5;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .main-border-radius {
+    @apply rounded-b-4xl;
+  }
+
+  .bg-placeholder { 
+    @apply bg-[conic-gradient(white_25%,theme(colors.gray.200)_25%_50%,white_50%_75%,theme(colors.gray.200)_75%)] bg-[size:50px_50px] 
+  }
+
+  .axiom-text {
+    text-shadow: 2px 2px 4px rgba(0, 47, 255, 0.2),
+      -2px -2px 4px rgba(238, 255, 0, 0.2), 2px -2px 4px rgba(255, 0, 191, 0.2),
+      -2px 2px 4px rgba(255, 0, 0, 0.2);
+
+      background: linear-gradient(to left, 
+      #002FFF 0%, 
+      #9747FF 25%, 
+      #FF00BF 50%, 
+      #FF0000 75%, 
+      #EEFF00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  }
+
+  .why-dashes{
+    background-image: linear-gradient(to right,  black 33%, transparent 33%, transparent 66%, black 66%);
+    background-position: bottom left;
+    background-size: 20% 10px;
+    background-repeat: repeat-x;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: black;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (pointer: coarse) {
+  .disable-hover {
+    pointer-events: none;
+  }
 }
