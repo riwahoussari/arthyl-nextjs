@@ -45,7 +45,7 @@ export default function AboutPage() {
             <motion.div
               initial={{ clipPath: "inset(100% 0 0 0)" }}
               animate={{ clipPath: "inset(0 0 0 0)" }} //onmount reveal anim
-              transition={{ duration: 0.7, delay: 0.3, ease: "easeInOut" }}
+              transition={{ duration: 0.7, delay: 0.5, ease: "easeInOut" }}
             >
               <Image
                 className={`aspect-4/5 w-full object-cover object-bottom`}

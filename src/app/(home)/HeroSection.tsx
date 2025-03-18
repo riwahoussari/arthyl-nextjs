@@ -37,7 +37,7 @@ export default function HeroSection() {
                     transition={{
                       duration: 0.3,
                       ease: "easeInOut",
-                      delay: 0.3 + 0.075 * i - brCount,
+                      delay: 0.5 + 0.075 * i - brCount,
                     }}
                     className="inline-block whitespace-pre bg-white bg-clip-text text-transparent mix-blend-difference"
                   >
@@ -53,7 +53,7 @@ export default function HeroSection() {
             className="-z-1 md:aspect-3/4 absolute bottom-[85%] left-0 aspect-square w-[min(55vw,280px)] overflow-hidden rounded-md md:bottom-[45%] md:w-[max(220px,25vw)] md:rounded-lg lg:bottom-[25%] lg:w-[min(400px,20vw)]"
             initial={{ clipPath: "inset(100% 0 0 0)" }}
             animate={{ clipPath: "inset(0 0 0 0)" }} //onmount reveal anim
-            transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           >
             <Image
               src={HERO_GRAPHICS.topLeftImg.src}
@@ -68,7 +68,7 @@ export default function HeroSection() {
             className="-z-1 md:aspect-3/4 absolute bottom-[85%] left-0 aspect-square w-[min(55vw,280px)] overflow-hidden rounded-md md:bottom-[45%] md:w-[max(220px,25vw)] md:rounded-lg lg:bottom-[25%] lg:w-[min(400px,20vw)]"
             initial={{ clipPath: "inset(100% 0 0 0)" }}
             animate={{ clipPath: "inset(0 0 0 0)" }} //onmount reveal anim
-            transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           >
             <video
               src={HERO_GRAPHICS.topLeftVideo.src}
@@ -84,7 +84,7 @@ export default function HeroSection() {
             className="bg-placeholder -z-1 aspect-5/3 absolute right-0 top-[95%] w-[min(60vw,300px)] overflow-hidden rounded-md md:top-[75%] md:w-[max(264px,30vw)] md:rounded-lg lg:top-[66%] lg:w-[min(500px,25vw)]"
             initial={{ clipPath: "inset(0 0 100%  0)" }}
             animate={{ clipPath: "inset(0 0 0 0)" }} //onmount reveal anim
-            transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.5, ease: "easeOut" }}
           >
             <Image
               alt={HERO_GRAPHICS.bottomRightImg.alt}

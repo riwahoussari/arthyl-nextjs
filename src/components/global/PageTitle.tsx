@@ -35,7 +35,7 @@ export default function PageTitle({ children }: { children: string }) {
                 className="inline-block whitespace-pre"
                 initial={{ y: i % 2 ? "100%" : "-100%" }}
                 animate={{ y: 0 }}
-                transition={{ type: "spring", duration: 0.8, delay: 0.1 }}
+                transition={{ type: "spring", duration: 0.8, delay: 0.3 }}
               >
                 {letter}
               </motion.span>
