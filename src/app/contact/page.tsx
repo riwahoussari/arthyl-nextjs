@@ -40,8 +40,6 @@ export default function ContactPage() {
     transition: { duration, ease: "easeInOut", delay },
   });
 
-
-
   // Reach out links
   const reachOutLinks = [
     {
@@ -122,6 +120,7 @@ export default function ContactPage() {
               {/* input */}
               <motion.input
                 disabled={pending}
+                required
                 ref={refs.fullName}
                 id={"fullName"}
                 name={"fullName"}
@@ -146,6 +145,7 @@ export default function ContactPage() {
               </div>
               {/* input */}
               <motion.input
+                required
                 disabled={pending}
                 ref={refs.phoneNumber}
                 id={"phoneNumber"}
@@ -169,6 +169,7 @@ export default function ContactPage() {
                 </motion.label>
               </div>
               <motion.textarea
+                required
                 disabled={pending}
                 ref={refs.message}
                 id="message"
