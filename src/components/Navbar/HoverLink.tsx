@@ -1,128 +1,46 @@
-import { AnchorHTMLAttributes } from "react";
-import Link, {LinkProps} from "next/link";
+import React from "react";
+import { TransitionLink } from "../global/TransitionLink";
 
-type HoverLinkProps =
-  | ({ tag: "Link"; children: string } & LinkProps)
-  | ({ tag: "a"; children: string } & AnchorHTMLAttributes<HTMLAnchorElement>);
+type HoverLinkProps = {
+  children: string;
+} & React.ComponentProps<typeof TransitionLink>;
 
-export default function HoverLink({ tag, children, ...props }: HoverLinkProps) {
-  if (tag === "Link") {
-    const linkProps = props as LinkProps;
-    return (
-      <Link {...linkProps} className="group relative flex overflow-hidden">
-        {/* Invisible placeholder to maintain height) */}
-        <span className="opacity-0">
-          {children.split("").map((letter, i) => (
-            <span className={`inline-block`} key={i}>
-              {letter}
-            </span>
-          ))}
-        </span>
-
-        {/* Text moves up & into view on hover */}
-        <span className="absolute top-full">
-          {children.split("").map((letter, i) => (
-            <span
-              key={i}
-              className="inline-block -rotate-x-90 duration-200 ease-in-out group-hover:translate-y-[-100%] group-hover:rotate-x-0"
-              style={{ transitionDelay: `${i * 25}ms` }}
-            >
-              {letter}
-            </span>
-          ))}
-        </span>
-
-        {/* Text moves up & out of view on hover */}
-        <span className="absolute bottom-0">
-          {children.split("").map((letter, i) => (
-            <span
-              key={i}
-              className="inline-block delay-[10] duration-200 ease-in-out group-hover:-translate-y-[100%] group-hover:rotate-x-90"
-              style={{ transitionDelay: `${i * 25}ms` }}
-            >
-              {letter}
-            </span>
-          ))}
-        </span>
-      </Link>
-    );
-  } else if (tag === "a") {
-    return (
-      <a {...props} className="group relative flex overflow-hidden">
-        {/* Invisible placeholder to maintain height) */}
-        <span className="opacity-0">
-          {children.split("").map((letter, i) => (
-            <span key={i} className={`inline-block`}>
-              {letter}
-            </span>
-          ))}
-        </span>
-
-        {/* Text moves up & into view on hover */}
-        <span className="absolute top-full">
-          {children.split("").map((letter, i) => (
-            <span
-              className="inline-block -rotate-x-90 duration-200 ease-in-out group-hover:translate-y-[-100%] group-hover:rotate-x-0"
-              style={{ transitionDelay: `${i * 25}ms` }}
-              key={i}
-            >
-              {letter}
-            </span>
-          ))}
-        </span>
-
-        {/* Text moves up & out of view on hover */}
-        <span className="absolute bottom-0">
-          {children.split("").map((letter, i) => (
-            <span
-              key={i}
-              className="inline-block delay-[10] duration-200 ease-in-out group-hover:-translate-y-[100%] group-hover:rotate-x-90"
-              style={{ transitionDelay: `${i * 25}ms` }}
-            >
-              {letter}
-            </span>
-          ))}
-        </span>
-      </a>
-    );
-  }
+export default function HoverLink({ children, ...props }: HoverLinkProps) {
+  return (
+    <TransitionLink {...props} className="group relative flex overflow-hidden">
+      {/* Invisible placeholder to maintain height */}
+      <span className="opacity-0">{renderLetters(children)}</span>
+      {/* Text moves up & out of view on hover */}
+      <span className="absolute bottom-0" aria-hidden>
+        {renderLetters(children, "out")}
+      </span>
+      {/* Text moves up & into view on hover */}
+      <span className="absolute top-full" aria-hidden>
+        {renderLetters(children, "in")}
+      </span>
+    </TransitionLink>
+  );
 }
 
-export function HoverLink1({ tag, children, ...props }: HoverLinkProps) {
-  if (tag === "Link") {
-    const linkProps = props as LinkProps;
-    return (
-      <Link {...linkProps} className="group relative flex overflow-hidden">
-        {/* Invisible placeholder to maintain height) */}
-        <span className="opacity-0">{children}</span>
-
-        {/* Text moves up & into view on hover */}
-        <span {...props} className="absolute top-full duration-200 ease-in-out group-hover:top-0">
-          {children}
-        </span>
-
-        {/* Text moves up & out of view on hover */}
-        <span {...props} className="absolute bottom-0 duration-200 ease-in-out group-hover:bottom-full">
-          {children}
-        </span>
-      </Link>
-    );
-  } else if (tag === "a") {
-    return (
-      <a {...props} className="group relative flex overflow-hidden">
-        {/* Invisible placeholder to maintain height) */}
-        <span className="opacity-0">{children}</span>
-
-        {/* Text moves up & into view on hover */}
-        <span className="absolute top-full duration-200 ease-in-out group-hover:top-0">
-          {children}
-        </span>
-
-        {/* Text moves up & out of view on hover */}
-        <span className="absolute bottom-0 duration-200 ease-in-out group-hover:bottom-full">
-          {children}
-        </span>
-      </a>
-    );
-  }
+/**
+ * Renders animated letter spans for hover effects.
+ * @param text - The text to split into individual letter spans.
+ * @param effect - Determines animation type: "in" for enter, "out" for exit.
+ */
+function renderLetters(text: string, effect?: "in" | "out") {
+  return text.split("").map((letter, i) => (
+    <span
+      key={i}
+      className={
+        effect === "in"
+          ? "-rotate-x-90 group-hover:rotate-x-0 inline-block duration-200 ease-in-out group-hover:translate-y-[-100%]"
+          : effect === "out"
+            ? "group-hover:rotate-x-90 inline-block delay-[10] duration-200 ease-in-out group-hover:-translate-y-[100%]"
+            : "inline-block"
+      }
+      style={effect ? { transitionDelay: `${i * 25}ms` } : undefined}
+    >
+      {letter}
+    </span>
+  ));
 }

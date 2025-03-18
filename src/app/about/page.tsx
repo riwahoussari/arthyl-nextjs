@@ -1,95 +1,93 @@
-"use client"
+"use client";
 import {
   motion,
   MotionValue,
   useInView,
   useScroll,
   useTransform,
-} from "motion/react"
-import PageTitle from "../../components/global/PageTitle"
-import { Fragment, HTMLAttributes, useEffect, useRef, useState } from "react"
-import { ABOUT_ME_PARAGRAPHS } from "../../utils/constants"
-import Frame4by5 from "./Frame4by5Svg"
+} from "motion/react";
+import PageTitle from "../../components/global/PageTitle";
+import { Fragment, HTMLAttributes, useEffect, useRef, useState } from "react";
+import Frame4by5 from "./Frame4by5Svg";
+import Image from "next/image";
+import { ABOUT_ME_PARAGRAPHS } from "../../utils/text";
+import { ABOUT_PAGE_IMG } from "@/utils/images";
 
 export default function AboutPage() {
-  const container = useRef(null)
+  const textContainer = useRef(null);
   const { scrollYProgress: textYProgress } = useScroll({
-    target: container,
-    offset: ["start center", "end 0.9"],
-  })
-  const titleParallaxes = [
-    [0, 0.25],
-    [0.25, 0.5],
-    [0.5, 0.75],
-    [0.75, 1],
-  ].map((range) => {
-    const [isClient, setIsClient] = useState(false);
-  
-    useEffect(() => {
-      setIsClient(true);
-    }, []);
-  
-    return useTransform(
-      textYProgress,
-      range,
-      isClient && window.innerWidth > 768 ? [20, -30] : [15, -25]
-    );
+    target: textContainer,
+    offset: ["start end", "end end"],
   });
-  const opacityParallaxes = [
-    [0, 0.2],
-    [0.3, 0.45],
-    [0.55, 0.7],
-    [0.8, 0.95],
-  ].map((range) => useTransform(textYProgress, range, [0, 1]))
+
+  // paragraph title parallax
+  const titleParallaxes: MotionValue<number>[] = [];
+  // small screens progress lines
+  const linesProgress: MotionValue<number>[] = [];
+
+  for (let i = 0; i < ABOUT_ME_PARAGRAPHS.length; i++) {
+    const percentage = 1 / ABOUT_ME_PARAGRAPHS.length;
+    const start = i * percentage;
+    const end = start + percentage;
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    titleParallaxes.push(useTransform(textYProgress, [start, end], [17, -25]));
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    linesProgress.push(useTransform(textYProgress, [start, end], [0, 1]));
+  }
 
   return (
     <>
       <PageTitle>ABOUT ME</PageTitle>
-      <section
-        ref={container}
-        className=" lg:flex lg:items-start lg:justify-center lg:gap-[6vw] xl:gap-26 2xl:gap-40"
-      >
-        {/* img */}
-        <div className="mx-auto w-[94vw] max-w-[500px] lg:sticky lg:top-0 lg:mx-0 lg:h-dvh lg:w-[min(380px,max(60vh,350px))] lg:pt-[calc(_(100vh-475px)/2_+30px)] xl:w-[400px] xl:pt-[calc(_(100vh-500px)/2_+24px)] ">
+      <section className="xl:gap-26 lg:flex lg:items-start lg:justify-center lg:gap-[6vw] 2xl:gap-40">
+        {/* ARTHYL Image */}
+        <div className="mx-auto w-[94vw] max-w-[500px] lg:sticky lg:top-0 lg:mx-0 lg:h-dvh lg:w-[min(380px,max(60vh,350px))] lg:pt-[calc(_(100vh-475px)/2_+30px)] xl:w-[400px] xl:pt-[calc(_(100vh-500px)/2_+24px)]">
           <div className="relative">
-            {/* <motion.div style={{ clipPath }}> */}
             <motion.div
               initial={{ clipPath: "inset(100% 0 0 0)" }}
-              animate={{ clipPath: "inset(0 0 0 0)" }}
+              animate={{ clipPath: "inset(0 0 0 0)" }} //onmount reveal anim
               transition={{ duration: 0.7, delay: 0.3, ease: "easeInOut" }}
             >
-              <img
+              <Image
                 className={`aspect-4/5 w-full object-cover object-bottom`}
-                src="/Arthyl-Ahmad.webp"
-                alt=""
+                src={ABOUT_PAGE_IMG.src}
+                alt={ABOUT_PAGE_IMG.alt}
+                placeholder="blur"
               />
             </motion.div>
+            {/* animated progress rectangle around image */}
             <Frame4by5
               progress={textYProgress}
-              className="absolute top-1/2 -right-6 -left-6 hidden -translate-y-1/2 lg:-right-4 lg:-left-4 lg:block xl:-right-5 xl:-left-5"
+              className="absolute -left-6 -right-6 top-1/2 hidden -translate-y-1/2 lg:-left-4 lg:-right-4 lg:block xl:-left-5 xl:-right-5"
             />
           </div>
         </div>
+
         {/* text */}
-        <div className="mx-auto w-[94vw] max-w-[500px] pt-[150px] pb-[60px] md:pb-[100px] md:max-w-[600px] lg:mx-0 lg:max-w-[500px] lg:space-y-[40vh] lg:py-[40vh] lg:pb-[25vh] lg:text-start xl:max-w-[600px] 2xl:max-w-[650px] ">
+        <div
+          ref={textContainer}
+          className="mx-auto w-[94vw] max-w-[500px] pb-[60px] pt-[150px] md:max-w-[600px] md:pb-[100px] lg:mx-0 lg:max-w-[500px] lg:space-y-[40vh] lg:py-[40vh] lg:pb-[25vh] lg:text-start xl:max-w-[600px] 2xl:max-w-[650px]"
+        >
           {ABOUT_ME_PARAGRAPHS.map(({ title, text }, i) => (
             <Fragment key={i}>
-              {/* line */}
-              <div className="relative flex gap-x-[5%] items-center lg:h-0 overflow-hidden mt-[250px] mb-[100px] first-of-type:mt-0 opacity-80">
+              {/* small screen progress line */}
+              <div className="relative mb-[100px] mt-[250px] flex items-center gap-x-[5%] overflow-hidden opacity-80 first-of-type:mt-0 lg:h-0">
+                {/* animating line */}
                 <motion.div
-                  className="h-[2px] rounded-full bg-black origin-left"
+                  className="h-[2px] origin-left rounded-full bg-black"
                   style={{
                     width: ((i + 1) / ABOUT_ME_PARAGRAPHS.length) * 60 + "%",
-                    scaleX: opacityParallaxes[i],
+                    scaleX: linesProgress[i],
                   }}
                 />
+                {/* palceholder */}
                 <div
-                  className="h-[2px] rounded-full bg-black/20 absolute"
+                  className="absolute h-[2px] rounded-full bg-black/20"
                   style={{
                     width: ((i + 1) / ABOUT_ME_PARAGRAPHS.length) * 60 + "%",
                   }}
                 />
-                <motion.p style={{ opacity: opacityParallaxes[i] }}>
+                {/* paragraph number */}
+                <motion.p style={{ opacity: linesProgress[i] }}>
                   {i + 1}
                 </motion.p>
               </div>
@@ -105,23 +103,24 @@ export default function AboutPage() {
         </div>
       </section>
     </>
-  )
+  );
 }
 
+// Paragraph Component to render each paragraph with title and text
 function Paragraph({
   title,
   text,
   parallax,
 }: {
-  title: string
-  text: string
-  parallax: MotionValue<number>
+  title: string;
+  text: string;
+  parallax: MotionValue<number>;
 }) {
-  const divElement = useRef(null)
-  let isInView = useInView(divElement, {
-    once: false,
-    margin: "-10%"
-  })
+  const divElement = useRef(null);
+  const isInView = useInView(divElement, {
+    once: true,
+    margin: "-10%",
+  });
 
   return (
     <div className="flex flex-col justify-center">
@@ -132,23 +131,25 @@ function Paragraph({
         <Text>{text}</Text>
       </div>
     </div>
-  )
+  );
 }
 
+// Title Component for each paragraph title with reveal animation
 function Title({
   children,
   isInView,
 }: {
-  children: string
-  isInView: boolean
+  children: string;
+  isInView: boolean;
 } & HTMLAttributes<HTMLHeadingElement>) {
   return (
     <motion.h2 className="mb-2 text-[min(9vw,36px)] font-medium md:mb-5 md:text-4xl xl:mb-4 xl:text-4xl">
+      {/* Animating individual letters of the title */}
       {children.split("").map((letter, i) => {
         return (
           <motion.span
             key={i}
-            className="inline-block origin-center whitespace-pre"
+            className="inline-block origin-center whitespace-pre font-semibold"
             initial={{ rotateX: 90, opacity: 0, y: "-10px" }}
             animate={isInView ? { rotateX: 0, opacity: 1, y: "0" } : {}}
             transition={{
@@ -159,39 +160,41 @@ function Title({
           >
             {letter}
           </motion.span>
-        )
+        );
       })}
     </motion.h2>
-  )
+  );
 }
 
+// Text Component to animate words individually within the paragraph
 function Text({ children }: { children: string }) {
-  const words = children.split(" ")
-  const paragraphRef = useRef<HTMLParagraphElement>(null)
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
     target: paragraphRef,
     offset: ["start end", "end 85%"],
-  })
+  });
 
-  const [animationComplete, setAnimationComplete] = useState(false)
-
+  // Mark animation as complete when the scroll reaches the end of the paragraph
+  const [animationComplete, setAnimationComplete] = useState(false);
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (v) => {
       if (v >= 1) {
-        setAnimationComplete(true)
+        setAnimationComplete(true);
       }
-    })
-    return () => unsubscribe()
-  }, [scrollYProgress])
+    });
+    return () => unsubscribe();
+  }, [scrollYProgress]);
 
+  // Word Component to animate each word the first time only
+  const words = children.split(" ");
   function Word({
     children,
     range,
   }: {
-    children: string
-    range: [number, number]
+    children: string;
+    range: [number, number];
   }) {
-    let opacity = useTransform(scrollYProgress, range, [0.15, 1])
+    const opacity = useTransform(scrollYProgress, range, [0.15, 1]);
     return (
       <motion.span
         style={{ opacity: animationComplete ? 1 : opacity }}
@@ -199,7 +202,7 @@ function Text({ children }: { children: string }) {
       >
         {children}
       </motion.span>
-    )
+    );
   }
 
   return (
@@ -208,14 +211,14 @@ function Text({ children }: { children: string }) {
       className="flex flex-wrap gap-y-0 text-[min(6vw,26px)] opacity-80 md:gap-y-2 md:text-3xl lg:justify-start lg:text-[28px] xl:text-3xl"
     >
       {words.map((word, i) => {
-        let start = i / words.length
-        let end = (i + 1) / words.length
+        const start = i / words.length;
+        const end = (i + 1) / words.length;
         return (
           <Word key={i} range={[start, end]}>
             {word}
           </Word>
-        )
+        );
       })}
     </p>
-  )
+  );
 }

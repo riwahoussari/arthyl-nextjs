@@ -1,9 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
-import { Coordinates } from "./constants";
 
 export default function useMousePosition() {
-  const [mousePosition, setMousePosition] = useState<Coordinates>({
+  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({
     x: 0,
     y: 0,
   });

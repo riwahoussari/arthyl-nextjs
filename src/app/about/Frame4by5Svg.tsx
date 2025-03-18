@@ -1,6 +1,8 @@
 import { MotionValue, useTransform, motion } from "motion/react"
 import { SVGProps } from "react"
 
+
+// rectangular frame that animates based on scroll
 export default function Frame4by5({
   progress,
   ...props
@@ -17,24 +19,28 @@ export default function Frame4by5({
       fill="none"
       {...props}
     >
+      {/* top */}
       <motion.path
         d="M1 1H400"
         stroke="black"
         initial={{ pathLength: 0 }}
         style={{ pathLength: path1Progress }}
       />
+      {/* right */}
       <motion.path
         d="M399.5 0.5V500"
         stroke="black"
         initial={{ pathLength: 0 }}
         style={{ pathLength: path2Progress }}
       />
+      {/* bottom */}
       <motion.path
         d="M400 499.5H1"
         stroke="black"
         initial={{ pathLength: 0 }}
         style={{ pathLength: path3Progress }}
       />
+      {/* left */}
       <motion.path
         d="M1 0.5V500"
         stroke="black"

@@ -1,127 +1,113 @@
-"use client"
-import Link from "next/link";
+"use client";
 import arthylSignaturePng from "../../assets/Arthyl-Signature.png";
 import Button from "../global/Button";
 import { useEffect, useRef, useState } from "react";
 import BurgerMenuSvg from "./BurgerMenuSvg";
 import MobileNavMenu from "./MobileNavMenu";
-import { PAGES } from "../../utils/constants";
+import { PAGES } from "../../utils/contactInfo";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import HoverLink from "./HoverLink";
 import Image from "next/image";
+import { TransitionLink } from "../global/TransitionLink";
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const [hideNav, setHideNav] = useState(false);
-  const { scrollY } = useScroll();
-
   const [hasMounted, setHasMounted] = useState(false);
+  const [hideNavOnScroll, setHideNavOnScroll] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const { scrollY } = useScroll();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const burgerBtnRef = useRef<HTMLDivElement>(null);
+
+  // Triggers on mount slide down animation for navbar
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
+  // Hide navbar when scrolling down, show when scrolling up
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
-
-    if (latest > previous && latest > 50) {
-      setHideNav(true); // Hide navbar when scrolling down
-    } else {
-      setHideNav(false); // Show navbar when scrolling up
-    }
+    setHideNavOnScroll(latest > previous && latest > 50);
   });
 
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const burgerMenuRef = useRef<HTMLDivElement>(null);
-
+  // Close mobile menu if user clicks outside the menu
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (
         mobileMenuRef.current &&
         !mobileMenuRef.current.contains(e.target as Node) &&
-        !burgerMenuRef.current?.contains(e.target as Node)
+        !burgerBtnRef.current?.contains(e.target as Node)
       ) {
-        setMenuOpen(false); // Close menu if clicked outside
+        setMobileMenuOpen(false);
       }
     }
 
-    if (menuOpen) {
+    if (mobileMenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [menuOpen]);
+  }, [mobileMenuOpen]);
 
   return (
     <motion.header
       className={
-        "fixed top-0 z-10 w-full border-b border-[rgba(0,0,0,0.2)] bg-beige/50 text-sm text-black lg:text-base " +
-        (menuOpen ? "sm:backdrop-blur-md" : " backdrop-blur-md")
+        "bg-beige/50 fixed top-0 z-10 w-full border-b border-[rgba(0,0,0,0.2)] text-sm text-black lg:text-base " +
+        (mobileMenuOpen ? "sm:backdrop-blur-md" : " backdrop-blur-md")
       }
       initial={{ y: "-100%" }}
-      animate={{
-        y: hasMounted ? (hideNav && !menuOpen ? "-100%" : "0%") : "0%",
-      }}
+      animate={{ y: hideNavOnScroll && !mobileMenuOpen ? "-100%" : "0%" }}
       transition={{
-        duration: hasMounted ? 0.3 : 0.7,
         ease: "easeInOut",
+        duration: hasMounted ? 0.3 : 0.7,
         delay: hasMounted ? 0 : 0.3,
       }}
     >
-      <div className="side-padding flex w-full items-center justify-between py-2 max-w-[2000px] mx-auto">
+      <div className="side-padding mx-auto flex w-full max-w-[2000px] items-center justify-between py-2">
         {/* LOGO */}
-        <Link href="/">
+        <TransitionLink href="/">
           <Image
             src={arthylSignaturePng}
             alt="Arthyl"
-            className={
-              "relative z-1 w-[25vw] max-w-30 lg:max-w-40 " +
-              (menuOpen && "max-sm:invertt")
-            }
+            className="z-1 max-w-30 relative w-[25vw] lg:max-w-40"
           />
-        </Link>
+        </TransitionLink>
 
-        {/* Pages Navigation Links */}
-        <nav className="absolute top-0 bottom-0 left-1/2 hidden -translate-x-1/2 items-center gap-4 font-light uppercase sm:flex lg:gap-8">
-          {PAGES.map((page, i) => {
-            return (
-              <HoverLink tag="Link" href={page.link} key={i}>
+        {/* Big Screen Navigation Links */}
+        <nav className="absolute bottom-0 left-1/2 top-0 hidden -translate-x-1/2 items-center gap-4 font-light uppercase sm:flex lg:gap-8">
+          {PAGES.map((page, i) => (
+              <HoverLink href={page.link} key={i}>
                 {page.name}
               </HoverLink>
-            );
-          })}
+          ))}
         </nav>
 
-        {/* Shop Page Link (cta) &  burger menu*/}
-        <div
-          className={
-            "relative z-1 flex items-center gap-4 " +
-            (menuOpen && " max-sm:invertt")
-          }
-        >
-          <Link href="/shop" onClick={() => setMenuOpen(false)}>
+        {/* CTA Button & Mobile Menu Toggle */}
+        <div className="z-1 relative flex items-center gap-4">
+          {/* CTA */}
+          <TransitionLink href="/shop" onClick={() => setMobileMenuOpen(false)}>
             <Button arrow={false} size="sm">
               AQUIRE ARTPIECE
             </Button>
-          </Link>
+          </TransitionLink>
 
+          {/* Mobile Burger Menu */}
           <div
-            ref={burgerMenuRef}
+            ref={burgerBtnRef}
             className="w-7 sm:hidden"
-            onClick={() => setMenuOpen((prev) => !prev)}
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
           >
-            <BurgerMenuSvg isOpen={menuOpen} />
+            <BurgerMenuSvg isOpen={mobileMenuOpen} />
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Navigation Menu */}
         <MobileNavMenu
           ref={mobileMenuRef}
-          menuOpen={menuOpen}
-          setMenuOpen={setMenuOpen}
+          isOpen={mobileMenuOpen}
+          setIsOpen={setMobileMenuOpen}
         />
       </div>
     </motion.header>
