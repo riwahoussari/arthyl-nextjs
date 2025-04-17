@@ -1,6 +1,6 @@
 import {
   HOME_HERO_HEADLINE,
-  HOME_HERO_NEXT_UP_ARTPIECES,
+  // HOME_HERO_NEXT_UP_ARTPIECES,
   HOME_HERO_ROTATING_TEXT,
   HOME_HERO_SUB_HEADLINE,
 } from "@/utils/text";
@@ -191,23 +191,23 @@ function RotatingText() {
   );
 }
 
-function NextUp() {
-  return (
-    <div>
-      <p className="text-sm font-light opacity-80 md:text-base">next up :</p>
-      <div className="mt-1.5 flex flex-wrap gap-x-3 text-lg sm:text-xl md:text-2xl">
-        {HOME_HERO_NEXT_UP_ARTPIECES.includes("cirrus") && (
-          <p
-            className="flex text-white"
-            style={{ textShadow: "0 0 10px rgba(0,0,0,1)" }}
-          >
-            → CIRRUS
-          </p>
-        )}
-        {HOME_HERO_NEXT_UP_ARTPIECES.includes("axiom") && (
-          <p className="axiom-text flex">→ AXIOM</p>
-        )}
-      </div>
-    </div>
-  );
-}
+// function NextUp() {
+//   return (
+//     <div>
+//       <p className="text-sm font-light opacity-80 md:text-base">next up :</p>
+//       <div className="mt-1.5 flex flex-wrap gap-x-3 text-lg sm:text-xl md:text-2xl">
+//         {HOME_HERO_NEXT_UP_ARTPIECES.includes("cirrus") && (
+//           <p
+//             className="flex text-white"
+//             style={{ textShadow: "0 0 10px rgba(0,0,0,1)" }}
+//           >
+//             → CIRRUS
+//           </p>
+//         )}
+//         {HOME_HERO_NEXT_UP_ARTPIECES.includes("axiom") && (
+//           <p className="axiom-text flex">→ AXIOM</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
