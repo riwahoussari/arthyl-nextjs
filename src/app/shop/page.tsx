@@ -10,8 +10,10 @@ import {
   useScroll,
 } from "motion/react";
 import Image, { StaticImageData } from "next/image";
-import { useRef, useState } from "react";
-import PlaceholderImage from "../../../public/placeholderImage.jpg"
+import { useEffect, useRef, useState } from "react";
+import PlaceholderImage from "../../../public/placeholderImage.jpg";
+import Modal from "./Modal";
+import { useModal } from "@/context/ModalContext";
 
 // Separate shop items into odd and even indexed groups
 const ODD_ITEMS = SHOP_ITEMS.map((item, i) => {
@@ -20,6 +22,11 @@ const ODD_ITEMS = SHOP_ITEMS.map((item, i) => {
 const EVEN_ITEMS = SHOP_ITEMS.map((item, i) => {
   if ((i + 1) % 2 === 0) return item;
 }).filter((item) => item !== undefined);
+
+export type ModalInfo = {
+  open: boolean;
+  item: ShopItem | null;
+};
 
 export default function ShopPage() {
   // Track mouse position for small image hover effect
@@ -36,6 +43,13 @@ export default function ShopPage() {
     hovering: boolean;
   }>({ src: undefined, hovering: false });
 
+  // Modal
+  const [modal, setModal] = useState<ModalInfo>({
+    open: false,
+    item: null
+  });
+  const { openModal, closeModal } = useModal();
+
   return (
     <>
       <PageTitle>Shop</PageTitle>
@@ -49,6 +63,13 @@ export default function ShopPage() {
             <div
               key={i}
               className="mb-24 md:mb-0 md:h-[67.5vw] md:max-h-[1200px] md:min-h-[600px]"
+              onClick={() => {
+                setModal({
+                  open: true,
+                  item: item
+                });
+                openModal();
+              }}
             >
               <Card {...item} setSmImgSrc={setSmImgSrc} />
             </div>
@@ -62,6 +83,13 @@ export default function ShopPage() {
             <div
               key={i}
               className="mb-24 md:mb-0 md:h-[67.5vw] md:max-h-[1200px] md:min-h-[600px]"
+              onClick={() => {
+                setModal({
+                  open: true,
+                  item: item
+                });
+                openModal();
+              }}
             >
               <Card {...item} setSmImgSrc={setSmImgSrc} />
             </div>
@@ -93,6 +121,16 @@ export default function ShopPage() {
           />
         </motion.div>
       </section>
+
+      <Modal
+        modal={modal}
+        onClose={() => {
+          setModal((prev) => {
+            return { ...prev, open: false };
+          });
+          closeModal();
+        }}
+      />
     </>
   );
 }
@@ -147,7 +185,9 @@ function Card({
       {/* Product Info and CTA Button */}
       <div className="flex flex-col items-start gap-2 xl:flex-row xl:items-end xl:justify-between xl:gap-6">
         <div>
-          <p className="text-xl font-medium md:text-2xl lg:text-3xl">{title}</p>
+          <h2 className="text-xl font-medium md:text-2xl lg:text-3xl">
+            {title}
+          </h2>
           <p className="text-sm opacity-70 md:text-base lg:text-lg">
             {remainingStock}/{totalStock} Remaining
           </p>

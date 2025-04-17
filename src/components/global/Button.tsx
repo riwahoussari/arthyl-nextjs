@@ -29,7 +29,7 @@ export default function Button({
         (!secondary && "px-5 py-2 md:px-6 md:py-2 lg:px-9 lg:py-3");
 
   // Add spacing when arrow is present
-  const arrowSpacing = "" + (arrow && " flex gap-3 md:gap-3.5 lg:gap-4 ");
+  const arrowSpacing = "" + (arrow && " flex gap-3 md:gap-3.5 lg:gap-4 items-center ");
 
   // Underline effect for secondary buttons
   const containerUnderlineEffect =

@@ -1,21 +1,30 @@
-"use client"
-import Lenis from "lenis"
-import { ReactNode, useEffect } from "react"
+"use client";
+import { useModal } from "@/context/ModalContext";
+import Lenis from "lenis";
+import { ReactNode, useEffect } from "react";
 
 export default function LenisScrollWrapper({
   children,
 }: {
-  children: ReactNode
+  children: ReactNode;
 }) {
-  useEffect(() => {
-    const lenis = new Lenis()
+  const { isOpen } = useModal();
 
+  useEffect(() => {
+    const lenis = new Lenis();
     function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    if (isOpen) {
+      lenis.destroy();
     }
 
-    requestAnimationFrame(raf)
-  }, [])
-  return <>{children}</>
+    return () => {
+      lenis.destroy();
+    };
+  }, [isOpen]);
+  return <>{children}</>;
 }

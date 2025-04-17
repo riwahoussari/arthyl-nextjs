@@ -12,41 +12,44 @@ import { useRef } from "react";
 
 export default function HeroSection() {
   const subHeadlineRef = useRef<HTMLDivElement>(null);
-  const isSubHeadlineInView = useInView(subHeadlineRef , {once: true});
+  const isSubHeadlineInView = useInView(subHeadlineRef, { once: true });
   return (
     <section className="side-padding mx-auto max-w-[2000px]">
       {/* headline  + video & img */}
       <div className="flex items-center justify-center">
         <div className="relative mt-[min(260px,50vw)] md:mt-[20vw] lg:mt-[min(250px,12.5vw)] lg:w-[min(100%,2000px)]">
           {/* headline */}
-          <h1 className="text-center text-[min(17.5vw,18vw)] font-semibold leading-[0.8] md:text-[max(110px,12vw)] lg:text-[min(200px,10vw)]">
-            {HOME_HERO_HEADLINE.split(" ").map((word, i) => {
-              let brCount = 0;
-              if (word == "<br>") {
-                brCount++;
-                return <br key={i} />;
-              } else if (word === "<lg:br>") {
-                brCount++;
-                return <br key={i} className="hidden lg:block" />;
-              }
-              return (
-                <span key={i} className="inline-block overflow-hidden">
-                  <motion.span
+          <div className="  will-change-auto [-webkit-backface-visibility:visible] ">
+            <h1 className="text-center text-[min(17.5vw,18vw)] font-semibold leading-[0.8]  md:text-[max(110px,12vw)] lg:text-[min(200px,10vw)] will-change-auto text-white mix-blend-difference  ">
+              {HOME_HERO_HEADLINE.split(" ").map((word, i) => {
+                let brCount = 0;
+                if (word === "<br>") {
+                  brCount++;
+                  return <br key={i} />;
+                } else if (word === "<lg:br>") {
+                  brCount++;
+                  return <br key={i} className="hidden lg:block" />;
+                }
+                return (
+                  <span key={i} className="inline-block overflow-hidden will-change-auto">
+                    <span className="inline-block whitespace-pre will-change-auto">{word} </span>
+                    {/* <motion.span
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
                     transition={{
                       duration: 0.3,
                       ease: "easeInOut",
                       delay: 0.5 + 0.075 * i - brCount,
-                    }}
-                    className="inline-block whitespace-pre bg-white bg-clip-text text-transparent mix-blend-difference"
-                  >
-                    {word}{" "}
-                  </motion.span>
-                </span>
-              );
-            })}
-          </h1>
+                      }}
+                      className="inline-block whitespace-pre mix-blend-difference z-1 relative" 
+                      >
+                      {word}{" "}
+                      </motion.span> */}
+                  </span>
+                );
+              })}
+            </h1>
+          </div>
 
           {/* top left img */}
           <motion.div
@@ -75,7 +78,10 @@ export default function HeroSection() {
               loop
               muted
               autoPlay
-              className="h-full w-full object-cover"
+              className="pointer-events-none h-full w-full object-cover"
+              onContextMenu={(e) => e.preventDefault()}
+              tabIndex={-1}
+              controls={false}
             />
           </motion.div>
 
@@ -106,7 +112,7 @@ export default function HeroSection() {
         {/* <motion.div> */}
         <RotatingText />
 
-        <NextUp />
+        {/* <NextUp /> */}
         {/* </motion.div> */}
       </motion.div>
 

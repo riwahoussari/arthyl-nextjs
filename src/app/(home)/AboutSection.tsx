@@ -72,11 +72,11 @@ export default function AboutSection() {
         {/* Read More btn */}
         <div
           ref={btnRef}
-          className="scale-120 w-fit origin-left overflow-hidden"
+          className="scale-120 w-fit origin-left "
         >
           <TransitionLink
             href="/about"
-            className="mt-2 w-max overflow-hidden md:mt-8 lg:mt-10 xl:mt-12"
+            className="mt-2 w-max  md:mt-8 lg:mt-10 xl:mt-12"
           >
             <motion.div
               animate={{ y: isBtnInView ? 0 : "100%" }}

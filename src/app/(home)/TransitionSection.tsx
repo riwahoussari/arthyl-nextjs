@@ -79,7 +79,7 @@ function StoryText() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             aria-hidden
           >
-            behind each horse
+            Behind Each Horse
           </motion.div>
 
           {/* placeholder text to maintain height */}

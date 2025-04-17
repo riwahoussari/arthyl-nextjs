@@ -134,7 +134,7 @@ export default function ContactPage() {
             {/* Phone Number Input */}
             <div>
               {/* label */}
-              <div className="overflow-h'phoneNumber'den">
+              <div className="overflow-hidden">
                 <motion.label
                   htmlFor={"phoneNumber"}
                   className="mb-1 block text-xl"

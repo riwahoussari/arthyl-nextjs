@@ -193,7 +193,7 @@ function FooterLinksGroup({
       </p>
 
       {/* Links */}
-      <div className="flex flex-col text-lg capitalize lg:text-xl xl:text-2xl">
+      <div className="flex flex-col text-lg  lg:text-xl xl:text-2xl">
         {links.map(({ text, to, tag, target }) => (
           <div
             key={text}
