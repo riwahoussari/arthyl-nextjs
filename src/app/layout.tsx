@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
-// import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/Footer/Footer";
 import LenisScrollWrapper from "../components/global/LenisScrollWrapper";
 import { ModalProvider } from "@/context/ModalContext";
 
@@ -35,29 +35,14 @@ export default function RootLayout({
               ))}
           </div>
 
-          <section>
-            <div className="flex-center">
-              <div className="container">
-                <div>
-                  <h1>
-                    <span className="inline-block overflow-hidden">
-                      <span className="inline-block whitespace-pre">
-                        main layout
-                      </span>
-                    </span>
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </section>
-
+         
           {/* main content */}
           <LenisScrollWrapper>
             <Navbar />
             <main className="lg:rounded-b-5xl xl:rounded-b-6xl z-1 bg-beige md:rounded-b-4xl max-w-dvw relative min-h-dvh overflow-clip rounded-b-3xl pt-12 text-black lg:pt-14">
               {children}
             </main>
-            {/* <Footer /> */}
+            <Footer />
           </LenisScrollWrapper>
 
           {/* portal for shop page modal */}
