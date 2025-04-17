@@ -18,19 +18,9 @@ export default function HeroSection() {
       <section>
         <div className="flex-center">
           <div className="container">
-            <div>
-              <h1>
-                <span className="inline-block overflow-hidden">
-                  <span className="inline-blockwhitespace-pre">
-                    {HOME_HERO_HEADLINE}
-                  </span>
-                </span>
-              </h1>
-            </div>
-
             {/* top left img */}
             <motion.div
-              className="-z-1 md:aspect-3/4 absolute bottom-[85%] left-0 aspect-square w-[min(55vw,280px)] overflow-hidden rounded-md md:bottom-[45%] md:w-[max(220px,25vw)] md:rounded-lg lg:bottom-[25%] lg:w-[min(400px,20vw)]"
+              className=" md:aspect-3/4 absolute bottom-[85%] left-0 aspect-square w-[min(55vw,280px)] overflow-hidden rounded-md md:bottom-[45%] md:w-[max(220px,25vw)] md:rounded-lg lg:bottom-[25%] lg:w-[min(400px,20vw)]"
               initial={{ clipPath: "inset(100% 0 0 0)" }}
               animate={{ clipPath: "inset(0 0 0 0)" }} //onmount reveal anim
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -42,40 +32,20 @@ export default function HeroSection() {
                 className="h-full w-full object-cover"
               />
             </motion.div>
+            
+            <div>
+              <h1>
+                <span className="inline-block overflow-hidden">
+                  <span className="inline-blockwhitespace-pre">
+                    {HOME_HERO_HEADLINE}
+                  </span>
+                </span>
+              </h1>
+            </div>
 
-            {/* top left img */}
-            <motion.div
-              className="-z-1 md:aspect-3/4 absolute bottom-[85%] left-0 aspect-square w-[min(55vw,280px)] overflow-hidden rounded-md md:bottom-[45%] md:w-[max(220px,25vw)] md:rounded-lg lg:bottom-[25%] lg:w-[min(400px,20vw)]"
-              initial={{ clipPath: "inset(100% 0 0 0)" }}
-              animate={{ clipPath: "inset(0 0 0 0)" }} //onmount reveal anim
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            >
-              <video
-                src={HERO_GRAPHICS.topLeftVideo.src}
-                loop
-                muted
-                autoPlay
-                className="pointer-events-none h-full w-full object-cover"
-                onContextMenu={(e) => e.preventDefault()}
-                tabIndex={-1}
-                controls={false}
-              />
-            </motion.div>
+            
 
-            {/* bottom right img */}
-            <motion.div
-              className="bg-placeholder -z-1 aspect-5/3 absolute right-0 top-[95%] w-[min(60vw,300px)] overflow-hidden rounded-md md:top-[75%] md:w-[max(264px,30vw)] md:rounded-lg lg:top-[66%] lg:w-[min(500px,25vw)]"
-              initial={{ clipPath: "inset(0 0 100%  0)" }}
-              animate={{ clipPath: "inset(0 0 0 0)" }} //onmount reveal anim
-              transition={{ duration: 0.4, delay: 0.5, ease: "easeOut" }}
-            >
-              <Image
-                alt={HERO_GRAPHICS.bottomRightImg.alt}
-                src={HERO_GRAPHICS.bottomRightImg.src}
-                placeholder="blur"
-                className="h-full w-full object-cover"
-              />
-            </motion.div>
+            
           </div>
         </div>
       </section>
