@@ -1,9 +1,9 @@
-// import {
-  // HOME_HERO_HEADLINE,
+import {
+  HOME_HERO_HEADLINE,
   // HOME_HERO_NEXT_UP_ARTPIECES,
   // HOME_HERO_ROTATING_TEXT,
   // HOME_HERO_SUB_HEADLINE,
-// } from "@/utils/text";
+} from "@/utils/text";
 // import { HERO_GRAPHICS } from "@/utils/images";
 
 // import { motion,  } from "motion/react";
@@ -21,7 +21,7 @@ export default function HeroSection() {
             <div>
               <h1>
                 <span className="inline-block overflow-hidden">
-                  <span className="inline-block whitespace-pre">Component</span>
+                  <span className="inline-blockwhitespace-pre">{HOME_HERO_HEADLINE}</span>
                 </span>
               </h1>
             </div>
