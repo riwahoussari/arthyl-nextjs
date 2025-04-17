@@ -14,26 +14,31 @@ export default function HeroSection() {
   const subHeadlineRef = useRef<HTMLDivElement>(null);
   const isSubHeadlineInView = useInView(subHeadlineRef, { once: true });
   return (
-    <section className="side-padding mx-auto max-w-[2000px]">
+    <section className="side-padding mx-auto max-w-[2000px] bg-beige" >
       {/* headline  + video & img */}
       <div className="flex items-center justify-center">
         <div className="relative mt-[min(260px,50vw)] md:mt-[20vw] lg:mt-[min(250px,12.5vw)] lg:w-[min(100%,2000px)]">
           {/* headline */}
-          <div className="  will-change-auto [-webkit-backface-visibility:visible] ">
-            <h1 className="text-center text-[min(17.5vw,18vw)] font-semibold leading-[0.8]  md:text-[max(110px,12vw)] lg:text-[min(200px,10vw)] will-change-auto text-white mix-blend-difference  ">
-              {HOME_HERO_HEADLINE.split(" ").map((word, i) => {
-                let brCount = 0;
+          <div>
+            <h1 className="text-center text-[min(17.5vw,18vw)] font-semibold leading-[0.8] text-white mix-blend-difference md:text-[max(110px,12vw)] lg:text-[min(200px,10vw)]">
+              <span className="inline-blockoverflow-hidden">
+                <span className="inline-blockwhitespace-pre">
+                  {HOME_HERO_HEADLINE}{" "}
+                </span>
+              </span>
+              {/* {HOME_HERO_HEADLINE.split(" ").map((word, i) => {
+                // let brCount = 0;
                 if (word === "<br>") {
-                  brCount++;
+                  // brCount++;
                   return <br key={i} />;
                 } else if (word === "<lg:br>") {
-                  brCount++;
+                  // brCount++;
                   return <br key={i} className="hidden lg:block" />;
                 }
                 return (
-                  <span key={i} className="inline-block overflow-hidden will-change-auto">
-                    <span className="inline-block whitespace-pre will-change-auto">{word} </span>
-                    {/* <motion.span
+                  <span key={i} className="inline-block overflow-hidden">
+                    <span className="inline-block whitespace-pre">{word} </span>
+                    <motion.span
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
                     transition={{
@@ -44,10 +49,10 @@ export default function HeroSection() {
                       className="inline-block whitespace-pre mix-blend-difference z-1 relative" 
                       >
                       {word}{" "}
-                      </motion.span> */}
+                      </motion.span>
                   </span>
                 );
-              })}
+              })} */}
             </h1>
           </div>
 

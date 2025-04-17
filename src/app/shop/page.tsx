@@ -10,7 +10,7 @@ import {
   useScroll,
 } from "motion/react";
 import Image, { StaticImageData } from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import PlaceholderImage from "../../../public/placeholderImage.jpg";
 import Modal from "./Modal";
 import { useModal } from "@/context/ModalContext";
