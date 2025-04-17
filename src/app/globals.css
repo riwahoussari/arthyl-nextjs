@@ -7,6 +7,58 @@
   --color-dark-beige: #e4d6ce;
 }
 
+body {
+  background-color: beige;
+}
+
+section {
+  margin-inline-end: auto;
+  max-width: 2000px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  position: relative;
+  margin-top: min(260px, 50vw);
+}
+
+h1 {
+  text-align: center;
+  font-size: min(17.5vw, 18vw);
+  font-weight: 600;
+  line-height: 0.8;
+
+  color: white;
+  mix-blend-mode: difference;
+}
+
+/* medium */
+@media (min-width: 768px) {
+  .container {
+    margin-top: 20vw;
+  }
+
+  h1 {
+    font-size: max(110px, 12vw);
+  }
+}
+
+/* large */
+@media (min-width: 1024px) {
+  .container {
+    margin-top: min(250px, 12.5vw);
+    width: min(100%, 2000px);
+  }
+  h1 {
+    font-size: min(200px, 10vw);
+  }
+}
+
 @layer utilities {
   .side-padding {
     @apply px-4 sm:px-5;
@@ -63,7 +115,7 @@
 }
 
 body {
-  transition-property: opacity, transform, filter, background;
+  transition-property: opacity, transform, filter;
   transition-timing-function: ease-in-out;
   transition-duration: 500ms;
 }
