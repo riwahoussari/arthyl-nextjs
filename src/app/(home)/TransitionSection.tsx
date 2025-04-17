@@ -84,7 +84,7 @@ function StoryText() {
 
           {/* placeholder text to maintain height */}
           <p className="truncate text-[6vw] font-semibold capitalize opacity-0 lg:text-[min(100px,5vw)]">
-            {"There's a story behind each horse"}
+            {"There's a story Behind each horse"}
           </p>
         </div>
 
