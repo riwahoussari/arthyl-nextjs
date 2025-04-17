@@ -4,6 +4,7 @@ export const PAGES = [
   { name: "About", link: "/about" },
   { name: "Contact", link: "/contact" },
   { name: "Shop", link: "/shop" },
+  { name: "Test", link: "/test" },
 ];
 
 // keep same format
